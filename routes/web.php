@@ -12,13 +12,14 @@ Route::get('/', function () {
 
     return view('welcome');
 });
-
-Route::middleware([LoggedIn::class])->get('/home', function () {
-    if (!session('access_token')) {
-        return redirect('/');
-    }
-
-    return view('logged-in');
+Route::middleware([LoggedIn::class])->group(function() {
+    Route::get('/home', function () {
+        if (!session('access_token')) {
+            return redirect('/');
+        }
+    
+        return view('logged-in');
+    });
 });
 
 Route::get('/logout', function(Request $request) {

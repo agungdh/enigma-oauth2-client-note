@@ -16,6 +16,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
-        "alpinejs": "^3.14.3"
+        "alpinejs": "^3.14.3",
+        "sweetalert2": "^11.14.4"
     }
 }

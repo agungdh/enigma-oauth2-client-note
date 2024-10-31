@@ -2,9 +2,29 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Middleware\LoggedIn;
+use Illuminate\Support\Facades\Http;
 
 Route::get('/', function () {
+    if (session('access_token')) {
+        return redirect('/home');
+    }
+
     return view('welcome');
+});
+
+Route::middleware([LoggedIn::class])->get('/home', function () {
+    if (!session('access_token')) {
+        return redirect('/');
+    }
+
+    return view('logged-in');
+});
+
+Route::get('/logout', function(Request $request) {
+    $request->session()->invalidate();
+
+    return redirect('/');
 });
 
 Route::get('/login', function(Request $request) {
@@ -40,7 +60,7 @@ Route::get('/auth/callback', function (Request $request) {
  
     $request->session()->put($response->json());
 
-    return redirect('/auth/user');
+    return redirect('/');
 });
 
 Route::get('/auth/user', function (Request $request) {

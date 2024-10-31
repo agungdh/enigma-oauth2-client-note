@@ -24,6 +24,8 @@ Route::middleware([LoggedIn::class])->group(function() {
 
     Route::prefix('/note')->group(function() {
         Route::get('/', [NoteController::class, 'index']);
+        Route::get('/{note}', [NoteController::class, 'show']);
+        Route::put('/{note}', [NoteController::class, 'update']);
         Route::post('/', [NoteController::class, 'store']);
         Route::delete('/{note}', [NoteController::class, 'destroy']);
     });

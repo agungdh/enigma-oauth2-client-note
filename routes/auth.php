@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 Route::get('/logout', function(Request $request) {
     $request->session()->invalidate();
 
-    return redirect('/');
+    return redirect(config('app.oauth_url') . '/logout?redirect_url='.config('app.url'));
 });
 
 Route::get('/login', function(Request $request) {

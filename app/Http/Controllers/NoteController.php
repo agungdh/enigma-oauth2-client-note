@@ -12,7 +12,7 @@ class NoteController extends Controller
      */
     public function index()
     {
-        return Note::all();
+        return Note::where('user_id', session('user.id'))->get();
     }
 
     /**
@@ -40,7 +40,7 @@ class NoteController extends Controller
      */
     public function show(Note $note)
     {
-        //
+        return $note;
     }
 
     /**
@@ -56,7 +56,17 @@ class NoteController extends Controller
      */
     public function update(Request $request, Note $note)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'note' => 'required',
+        ]);
+
+        $note->user_id = session('user.id');
+        $note->title = $request->title;
+        $note->note = $request->note;
+        $note->date_time = now();
+
+        $note->save();
     }
 
     /**

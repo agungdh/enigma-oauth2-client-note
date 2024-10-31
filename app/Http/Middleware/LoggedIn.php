@@ -21,7 +21,7 @@ class LoggedIn
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$accessToken,
-        ])->get('http://192.168.0.112/api/user');
+        ])->get(config('app.oauth_url') . '/api/user');
         
         $request->session()->put('user', $response->json());
 

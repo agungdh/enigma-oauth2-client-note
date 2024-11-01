@@ -11,7 +11,7 @@ Route::get('/', function () {
         return redirect('/home');
     }
 
-    return view('welcome');
+    return redirect('/login');
 });
 Route::middleware([LoggedIn::class])->group(function() {
     Route::get('/home', function () {

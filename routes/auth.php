@@ -5,10 +5,13 @@ use Illuminate\Http\Request;
 use App\Http\Middleware\LoggedIn;
 use Illuminate\Support\Facades\Http;
 
-Route::get('/logout', function(Request $request) {
-    $request->session()->invalidate();
+Route::middleware([LoggedIn::class])->get('/logout', function(Request $request) {
+    $query = http_build_query([
+        'redirect_url' => config('app.url'),
+        'access_token' => session('access_token'),
+    ]);
 
-    return redirect(config('app.oauth_url') . '/logout?redirect_url='.config('app.url'));
+    return redirect(config('app.oauth_url') . '/logout?'.$query);
 });
 
 Route::get('/login', function(Request $request) {
